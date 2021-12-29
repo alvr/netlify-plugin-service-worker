@@ -1,0 +1,21 @@
+name: netlify-plugin-service-worker
+inputs:
+  - name: sw
+    required: true
+    default: sw.js
+  - name: patterns
+    required: true
+    default: ["**/*.{js,css,html}"]
+  - name: fallback
+    required: true
+    default: "/404.html"
+  - name: ignores
+    required: true
+    default: ["**/index.xml", "**/index.json", "**/sitemap.xml"]
+  - name: caching
+    required: true
+    default:
+      - urlPattern: "/\.(?:png|jpg|jpeg|gif|bmp|webp|svg|ico)$/"
+        handler: CacheFirst
+      - urlPattern: "/\.(?:json|xml)$/"
+        handler: NetworkOnly
