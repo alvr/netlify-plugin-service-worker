@@ -1,0 +1,32 @@
+name: netlify-plugin-service-worker
+inputs:
+  - name: sw
+    description: The path and filename of the service worker file that will be created by the build process, relative to the publish directory. It must end in '.js'.
+    required: false
+    default: sw.js
+  - name: patterns
+    description: Files matching any of these patterns will be included in the precache manifest. More information at https://github.com/isaacs/node-glob#glob-primer
+    required: false
+    default: ["**/*.{js,css,html}"]
+  - name: fallback
+    description: If specified, all navigation requests for URLs that aren't precached will be fulfilled with the HTML at the URL provided. You must pass in the URL of an HTML document that is listed in your precache manifest.
+    required: false
+    default: "/404.html"
+  - name: ignores
+    description: A set of patterns matching files to always exclude when generating the precache manifest. More information at https://github.com/isaacs/node-glob#options.
+    required: false
+    default: ["**/index.xml", "**/index.json", "**/sitemap.xml"]
+  - name: mode
+    description: If set to 'production', then an optimized service worker bundle that excludes debugging info will be produced. If not explicitly configured here, the process.env.NODE_ENV value will be used, and failing that, it will fall back to 'production'.
+    required: false
+    default: production
+  - name: caching
+    description: Array of https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-build#.RuntimeCachingEntry
+    required: false
+    default:
+      - urlPattern: >- 
+          "/\.(?:png|jpg|jpeg|gif|bmp|webp|svg|ico)$/"
+        handler: CacheFirst
+      - urlPattern: >-
+          "/\.(?:json|xml)$/"
+        handler: NetworkOnly
